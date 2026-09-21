@@ -40,4 +40,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 Route::middleware(['auth', 'role:admin,kasir'])->group(function () {
     Route::get('/pos', [PosController::class, 'index'])->name('pos.index');
     Route::post('/pos', [PosController::class, 'store'])->name('pos.store');
+    Route::get('/pos/history', function () {
+        return 'Halaman Riwayat Transaksi Saya';
+    })->name('pos.history');
 });
