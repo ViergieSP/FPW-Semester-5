@@ -13,7 +13,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::latest()->paginate(10);
+        $categories = Category::withCount('products')->latest()->paginate(10);
         return view('master-data.category.index', compact('categories'));
     }
 
