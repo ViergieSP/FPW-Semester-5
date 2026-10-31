@@ -2,7 +2,8 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800">Data Produk</h2>
-            <a href="{{ route('products.create') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm transition">
+            <a href="{{ route('products.create') }}"
+                class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm transition">
                 + Tambah Produk
             </a>
         </div>
@@ -13,9 +14,8 @@
             <x-card>
                 <form method="GET" action="{{ route('products.index') }}" class="flex gap-3 mb-4">
                     <input type="text" name="search" value="{{ request('search') }}"
-                        placeholder="Cari nama atau kode produk..."
-                        class="flex-1 rounded-md border-gray-300 shadow-sm">
-                
+                        placeholder="Cari nama atau kode produk..." class="flex-1 rounded-md border-gray-300 shadow-sm">
+
                     <select name="category_id" class="rounded-md border-gray-300">
                         <option value="">Semua Kategori</option>
                         @foreach ($categories as $category)
@@ -24,7 +24,7 @@
                             </option>
                         @endforeach
                     </select>
-                
+
                     <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-md">Cari</button>
                     <a href="{{ route('products.index') }}" class="px-4 py-2 text-gray-500">Reset</a>
                 </form>
@@ -37,18 +37,28 @@
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kode</th>
-                            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nama Produk</th>
-                            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kategori</th>
-                            <th class="px-4 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Harga</th>
-                            <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Stok</th>
-                            <th class="px-4 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Total Nilai Stok</th>
-                            <th class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Kode</th>
+                            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Nama Produk</th>
+                            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Kategori</th>
+                            <th class="px-4 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Harga</th>
+                            <th
+                                class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Stok</th>
+                            <th class="px-4 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Total Nilai Stok</th>
+                            <th
+                                class="px-4 py-2 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
                         @forelse ($products as $product)
-                            <tr class="@if ($product->stock_status === 'habis') bg-red-50 @elseif ($product->stock_status === 'menipis') bg-yellow-50 @endif">
+                            <tr
+                                class="@if ($product->stock_status === 'habis') bg-red-50 @elseif ($product->stock_status === 'menipis') bg-yellow-50 @endif">
                                 <td class="px-4 py-2 text-sm">{{ $product->code }}</td>
                                 <td class="px-4 py-2 text-sm font-medium text-gray-900">{{ $product->name }}</td>
                                 <td class="px-4 py-2 text-sm text-gray-600">{{ $product->category->name }}</td>
@@ -67,11 +77,18 @@
                                     Rp{{ number_format($product->total_stock_value, 0, ',', '.') }}
                                 </td>
                                 <td class="px-4 py-2 text-sm text-center space-x-2">
-                                    <a href="{{ route('products.edit', $product) }}" class="text-indigo-600 hover:text-indigo-900">
+                                    <a href="{{ route('products.edit', $product) }}"
+                                        class="text-indigo-600 hover:text-indigo-900">
                                         Ubah
                                     </a>
+
+                                    <a href="{{ route('products.show', $product) }}" class="text-gray-600">
+                                        Detail
+                                    </a>
+
                                     <form action="{{ route('products.destroy', $product) }}" method="POST"
-                                        onsubmit="return confirm('Yakin ingin menghapus produk {{ $product->name }}?')" class="inline">
+                                        onsubmit="return confirm('Yakin ingin menghapus produk {{ $product->name }}?')"
+                                        class="inline">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="text-red-600">Hapus</button>
